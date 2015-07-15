@@ -1,0 +1,19 @@
+<?php
+require_once ("../../../controller/autoload.inc");
+
+$db = new view\cd\model\DBCd;
+$fn = new controller\functions;
+
+if(empty($_POST))
+    exit;
+
+var_dump($_FILES);
+//var_dump($fn->prepareArrayDoublePointer($_POST, false));
+
+//exit;
+if(empty($_FILES['img']['name'])){
+    var_dump($db->insertCD($fn->prepareArrayDoublePointer($_POST, false)));// vai retornar a quantidade de linhas afetadas
+}else if(move_uploaded_file($_FILES['img']['tmp_name'], '../img/cd/'.$_FILES['img']['name'])){
+    $_POST['img'] = $_FILES['img']['name'];
+    var_dump($db->insertCD($fn->prepareArrayDoublePointer($_POST, false))); // vai retornar a quantidade de linhas afetadas
+}
